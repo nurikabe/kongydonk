@@ -2,6 +2,8 @@ var BarrelScene = new Phaser.Class({
 
     Extends: Phaser.Scene,
 
+    platforms: null,
+
     initialize: function BootScene() {
         Phaser.Scene.call(this, {key: 'BarrelScene'});
     },
@@ -10,24 +12,28 @@ var BarrelScene = new Phaser.Class({
         // Black background
         this.cameras.main.setBackgroundColor('rgba(0, 0, 0, 0)');
 
-        /*
-        this.graphics = this.add.graphics();
-        //this.graphics.lineStyle(5, 0xff00ff, 1.0);
-        this.graphics.fillStyle(0xaa00aa, 1.0);
-        this.graphics.fillRect(50, 50, 400, 200);
-        */
+        platforms = [];
 
-        platforms = this.physics.add.staticGroup();
+        for (var i = 0; i < 10; i++) {
+            var x = Math.random() * 800;
+            var y = Math.random() * 600;
 
-        platforms.create(400, 568, 'platform').setScale(2).refreshBody();
+            platformGroup = this.physics.add.staticGroup();
+            var platform = platformGroup.create(x, y, 'platform');
 
-        var p1 = platforms.create(350, 450, 'platform');
-        p1.setScale(2, 1);
-        p1.angle = 2;
+            var scale = Math.random() * 2;
+            platform.setScale(scale, scale);
 
-        var p2 = platforms.create(450, 350, 'platform');
-        p2.setScale(2, 1);
-        p2.angle = -2;
+            var angle = Math.random() * 360;
+            platform.angle = angle;
+
+            platforms.push(platform);
+        }
+    },
+
+    update: function() {
+        for (var i = 0; i < 10; i++) {
+            platforms[i].angle += 1;
+        }
     }
 });
-
