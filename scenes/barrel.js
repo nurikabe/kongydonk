@@ -26,6 +26,7 @@ var BarrelScene = new Phaser.Class({
 
             var angle = Math.random() * 360;
             platform.angle = angle;
+            platform.refreshBody();
 
             platforms.push(platform);
         }
@@ -34,6 +35,7 @@ var BarrelScene = new Phaser.Class({
     update: function() {
         for (var i = 0; i < 10; i++) {
             platforms[i].angle += 1;
+            platforms[i].refreshBody();
         }
     }
 });
