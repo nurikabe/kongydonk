@@ -8,32 +8,29 @@ var BarrelScene = new Phaser.Class({
         Phaser.Scene.call(this, {key: 'BarrelScene'});
     },
 
+    preload: function() {
+
+    },
+
     create: function () {
         // Black background
-        this.cameras.main.setBackgroundColor('rgba(0, 0, 0, 0)');
+        //this.cameras.main.setBackgroundColor('rgba(0, 0, 0, 0)');
 
-        platforms = [];
+        // Sky blue
+        this.add.image(400, 300, 'sky');
 
-        for (var i = 0; i < 10; i++) {
-            var x = Math.random() * 800;
-            var y = Math.random() * 600;
+        platforms = this.physics.add.staticGroup();
 
-            platformGroup = this.physics.add.staticGroup();
-            var platform = platformGroup.create(x, y, 'platform');
+        // Ground
+        platforms.create(400, 568, 'platform').setScale(2).refreshBody();
 
-            var scale = Math.random() * 2;
-            platform.setScale(scale, scale);
+        platforms.create(400, 410, 'platform').setScale(2, 1).refreshBody();
+        platforms.create(50, 250, 'platform');
+        platforms.create(750, 220, 'platform');
 
-            var angle = Math.random() * 360;
-            platform.angle = angle;
 
-            platforms.push(platform);
-        }
     },
 
     update: function() {
-        for (var i = 0; i < 10; i++) {
-            platforms[i].angle += 1;
-        }
     }
 });

@@ -10,7 +10,9 @@ var BootScene = new Phaser.Class({
     preload: function ()
     {
         this.load.image('boot', 'assets/boot.png');
+        this.load.image('sky', 'assets/sky.png');
         this.load.image('platform', 'assets/platform.png');
+        this.load.image('donkeykong', 'assets/donkeykong.gif');
     },
 
     create: function ()
