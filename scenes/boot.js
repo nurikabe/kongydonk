@@ -13,6 +13,8 @@ var BootScene = new Phaser.Class({
         this.load.image('sky', 'assets/sky.png');
         this.load.image('platform', 'assets/platform.png');
         this.load.image('donkeykong', 'assets/donkeykong.gif');
+
+        this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
     },
 
     create: function ()
