@@ -28,8 +28,18 @@ var BarrelScene = new Phaser.Class({
         platforms.create(150, 260, 'platform').setScale(2, 1).refreshBody();
         platforms.create(500, 120, 'platform');
 
-        this.dk = this.physics.add.sprite(600, -100, 'donkeykong').setScale(0.2);
+        this.dk = this.physics.add.sprite(650, -100, 'donkeykong').setScale(0.2);
         this.dk.setBounce(0.3);
+
+        this.tweens.add({
+            targets: this.dk,
+            x: 350,
+            duration: 4000,
+            ease: 'Expo.easeInOut',
+            repeat: -1,
+            //delay: 500,
+            yoyo: true
+        });
 
         this.physics.add.collider(this.dk, platforms);
 
@@ -40,6 +50,20 @@ var BarrelScene = new Phaser.Class({
         this.player.setCollideWorldBounds(true);
 
         this.physics.add.collider(this.player, platforms);
+
+        this.physics.add.collider(this.player, this.dk, hitHazard, null, this);
+
+        this.barrel = this.physics.add.sprite(20, 500, 'barrel').setScale(0.25);;
+        //this.barrel.setCollideWorldBounds(true);
+        this.barrel.body.velocity.x = 100;
+
+        this.physics.add.collider(this.barrel, platforms);
+
+        this.physics.add.collider(this.barrel, this.player, hitHazard, null, this);
+
+        function hitHazard() {
+            alert('Ouch!');
+        }
 
         this.anims.create({
             key: 'left',
@@ -86,4 +110,5 @@ var BarrelScene = new Phaser.Class({
             this.player.setVelocityY(-330);
         }
     }
+
 });
