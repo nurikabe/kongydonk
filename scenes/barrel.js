@@ -53,9 +53,9 @@ var BarrelScene = new Phaser.Class({
 
         this.physics.add.collider(this.player, this.dk, hitHazard, null, this);
 
-        this.barrel = this.physics.add.sprite(20, 500, 'barrel').setScale(0.25);;
+        this.barrel = this.physics.add.sprite(this.dk.x, this.dk.y, 'barrel').setScale(0.25);;
         //this.barrel.setCollideWorldBounds(true);
-        this.barrel.body.velocity.x = 100;
+        this.barrel.body.velocity.x = -200;
 
         this.physics.add.collider(this.barrel, platforms);
 
