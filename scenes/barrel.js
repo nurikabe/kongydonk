@@ -53,17 +53,30 @@ var BarrelScene = new Phaser.Class({
 
         this.physics.add.collider(this.player, this.dk, hitHazard, null, this);
 
-        this.barrel = this.physics.add.sprite(this.dk.x, this.dk.y, 'barrel').setScale(0.25);;
-        //this.barrel.setCollideWorldBounds(true);
-        this.barrel.body.velocity.x = -200;
-
-        this.physics.add.collider(this.barrel, platforms);
-
-        this.physics.add.collider(this.barrel, this.player, hitHazard, null, this);
-
         function hitHazard() {
             alert('Ouch!');
         }
+
+        function createBarrel(scene, platforms) {
+            var barrel = scene.physics.add.sprite(scene.dk.x, scene.dk.y, 'barrel').setScale(0.25);
+            barrel.setCollideWorldBounds(true);
+            barrel.body.velocity.x = -200;
+            barrel.body.collideWorldBounds = true;
+            barrel.body.bounce.set(1, 0);
+            scene.physics.add.collider(barrel, platforms);
+            scene.physics.add.collider(barrel, scene.player, hitHazard, null, this);
+        }
+
+        //createBarrel(this, platforms);
+        //this.time.delayedCall(3000, createBarrel, [this, platforms]);
+
+        this.time.addEvent({
+            delay: 3000,
+            callback: createBarrel,
+            args: [this, platforms],
+            //callbackScope: this,
+            loop: true
+        });
 
         this.anims.create({
             key: 'left',
