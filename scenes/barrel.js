@@ -4,6 +4,8 @@ var BarrelScene = new Phaser.Class({
 
     platforms: null,
 
+    onLadder: false,
+
     initialize: function BootScene() {
         Phaser.Scene.call(this, {key: 'BarrelScene'});
     },
@@ -28,6 +30,9 @@ var BarrelScene = new Phaser.Class({
         platforms.create(150, 260, 'platform').setScale(2, 1).refreshBody();
         platforms.create(500, 120, 'platform');
 
+        var ladders = this.physics.add.staticGroup();
+        ladders.create(130, 472, 'ladder').setScale(0.1, 0.3).refreshBody();
+
         this.dk = this.physics.add.sprite(650, -100, 'donkeykong').setScale(0.2);
         this.dk.setBounce(0.3);
 
@@ -50,7 +55,7 @@ var BarrelScene = new Phaser.Class({
         this.player.setCollideWorldBounds(true);
 
         this.physics.add.collider(this.player, platforms);
-
+        this.physics.add.overlap(this.player, ladders, function() { this.onLadder = true; }, null, this);
         this.physics.add.collider(this.player, this.dk, hitHazard, null, this);
 
         function hitHazard() {
@@ -102,6 +107,7 @@ var BarrelScene = new Phaser.Class({
     },
 
     update: function() {
+
         if (this.cursors.left.isDown)
         {
             this.player.setVelocityX(-160);
@@ -120,8 +126,17 @@ var BarrelScene = new Phaser.Class({
 
         if (this.cursors.up.isDown && this.player.body.touching.down)
         {
-            this.player.setVelocityY(-330);
+            this.player.body.setAllowGravity(false);
+            if (this.onLadder) {
+                // Climb!
+                this.player.setVelocityY(-90);
+            } else {
+                // Jump!
+                this.player.setVelocityY(-170);
+            }
         }
+
+        this.onLadder = false;
     }
 
 });
